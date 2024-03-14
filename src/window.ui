@@ -1,0 +1,110 @@
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="GconvertWindow" parent="AdwApplicationWindow">
+    <property name="default-width">1000</property>
+    <property name="default-height">600</property>
+    <property name="content">
+      <object class="AdwToolbarView">
+        <!-- Child pour le AdwHeaderBar -->
+        <child type="top">
+          <object class="AdwHeaderBar" id="header_bar">
+            <!-- Child pour le GtkMenuButton -->
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="primary">True</property>
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Menu</property>
+                <property name="menu-model">primary_menu</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="Global_box">
+            <property name="orientation">vertical</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <property name="spacing">10</property>
+            <!-- Child pour le GtkLabel -->
+            <child>
+              <object class="GtkLabel" id="liste">
+                <property name="label">Hello, World!</property>
+                <property name="halign">start</property>
+                <property name="valign">start</property>
+                <style>
+                  <class name="title-1"/>
+                </style>
+              </object>
+            </child>
+            <!-- Child pour le GtkButton -->
+            <child>
+              <object class="GtkButton" id="btn">
+                <property name="label">Convertir</property>
+                <property name="visible">True</property>
+                <property name="tooltip-text" translatable="yes">Convertir le fichier</property>
+                <property name="width-request">50</property>
+                <property name="height-request">20</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="focus_on_click">True</property>
+               <!-- <signal name="clicked" handler="on_button_clicked1" swapped="no"/>
+                 <property name="margin-bottom">100</property> -->
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="my_combobox">
+                <property name="width-request">50</property>
+                <property name="height-request">30</property>
+                <child>
+                  <object class="GtkListStore" id="liststore">
+                    <columns>
+                      <column type="gchararray"/>
+                    </columns>
+                    <data>
+                      <row>
+                        <col id="0">Option 1</col>
+                      </row>
+                      <row>
+                        <col id="0">Option 2</col>
+                      </row>
+                      <row>
+                        <col id="0">Option 3</col>
+                      </row>
+                    </data>
+                  </object>
+                </child>
+                <property name="model">liststore</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </template>
+  <!-- Définition du menu -->
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">app.preferences</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+        <attribute name="action">win.show-help-overlay</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_About Gconvert</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Aide</attribute>
+        <attribute name="action">app.aide</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>
+
+

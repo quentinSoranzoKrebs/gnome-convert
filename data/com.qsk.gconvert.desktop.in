@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=gconvert
+Exec=gconvert
+Icon=com.qsk.gconvert
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
