@@ -18,7 +18,11 @@ Gnome Convert offre une interface utilisateur intuitive pour convertir différen
 
 Pour installer Gnome Convert via Flatpak, suivez ces étapes :
 
-1. Ajoutez le référentiel Flathub s'il n'est pas déjà ajouté :
+1. Cloner le projet avec git clone :
    ```bash
-   flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+   git clone https://github.com/quentinSoranzoKrebs/gnome-convert.git
+
+2. Installer l'application avec flatpack :
+   ```bash
+   flatpack install com.qsk.gconvert
 

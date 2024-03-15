@@ -26,6 +26,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Gio, Adw
 from .window import GconvertWindow
 
+
 class GconvertApplication(Adw.Application):
     """The main application singleton class."""
 

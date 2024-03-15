@@ -20,7 +20,7 @@
 from gi.repository import Adw
 from gi.repository import Gtk
 import os
-
+from PIL import Image
 
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
 class GconvertWindow(Adw.ApplicationWindow):
