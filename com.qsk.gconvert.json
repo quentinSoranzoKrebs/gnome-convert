@@ -32,7 +32,7 @@
             "sources": [
                 {
                     "type": "git",
-                    "url": "https://github.com/quentinSoranzoKrebs/gnome-convert.git"
+                    "url": "file:///home/quentin/Projets"
                 }
             ]
         }
