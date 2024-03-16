@@ -34,13 +34,12 @@
 	    "sources": [
 		{
 		    "type": "archive",
-		    "url": "https://files.pythonhosted.org/packages/f8/3e/32cbd0129a28686621434cbf17bb64bf1458bfb838f1f668262fefce145c/pillow-10.2.0.tar.gz",
-		    "sha256": "e87f0b2c78157e12d7686b27d63c070fd65d994e8ddae6f328e0dcf4a0cd007e"
+		    "url": "https://files.pythonhosted.org/packages/94/59/6638090c25e9bc4ce0c42817b5a234e183872a1129735a9330c472cc2056/pip-24.0.tar.gz",
+		    "sha256": "ea9bd1a847e8c5774a5777bb398c19e80bcd4e2aa16a4b301b718fe6f593aba2"
 		}
 	    ],
 	    "build-commands": [
-	    	"ls",
-		"python3 setup.py install --user"
+		"python3 setup.py install --prefix=/app"
 	    ]
 	},
         {
@@ -52,7 +51,17 @@
                     "type": "git",
                     "url": "https://github.com/quentinSoranzoKrebs/gnome-convert.git"
                 }
-            ]
+            ],
+            "build-options": {
+                "python": {
+                    "packages": [
+                        {
+                            "name": "python3",
+                            "modules": ["PIL"]
+                        }
+                    ]
+                }
+            }
         }
     ]
 }

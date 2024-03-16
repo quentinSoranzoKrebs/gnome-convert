@@ -11,8 +11,6 @@ gnome.compile_resources('gconvert',
 
 python = import('python')
 
-pillow_dep = dependency('python3', modules: 'PIL')
-
 conf = configuration_data()
 conf.set('PYTHON', python.find_installation('python3').path())
 conf.set('VERSION', meson.project_version())
@@ -32,7 +30,6 @@ gconvert_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'test.py',
 ]
 
 
