@@ -19,6 +19,7 @@
 
 from gi.repository import Adw
 from gi.repository import Gtk
+from PIL import Image
 import os
 
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
@@ -58,10 +59,16 @@ class GconvertWindow(Adw.ApplicationWindow):
 
 
     def on_button_clicked1(self,widget):
-        if self.Global_box.get_orientation() == Gtk.Orientation.VERTICAL:
-            self.Global_box.set_orientation(Gtk.Orientation.HORIZONTAL)
-        else:
-            self.Global_box.set_orientation(Gtk.Orientation.VERTICAL)
+        image = Image.open(self.file.get_path())
+        # Convertir l'image en noir et blanc
+        image_bw = image.convert('L')
+
+        # Définir le chemin de sauvegarde pour l'image convertie
+        output_directory = "/home/quentin/Images"
+        output_filename = "image_convertie.jpg"
+        output_path = os.path.join(output_directory, output_filename)
+        # Enregistrer l'image convertie dans le répertoire spécifié
+        image_bw.save(output_path)
 
     def on_button_clicked2(self,widget):
         self.Global_box.set_orientation(Gtk.Orientation.VERTICAL)
