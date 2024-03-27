@@ -46,17 +46,7 @@
                     "type": "git",
                     "url": "https://github.com/quentinSoranzoKrebs/gnome-convert.git"
                 }
-            ],
-            "build-options": {
-                "python": {
-                    "packages": [
-                        {
-                            "name": "python3",
-                            "modules": ["PIL"]
-                        }
-                    ]
-                }
-            }
+            ]
         }
     ]
 }

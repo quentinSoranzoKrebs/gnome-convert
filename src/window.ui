@@ -2,7 +2,7 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
   <template class="GconvertWindow" parent="AdwApplicationWindow">
-    <property name="default-width">1000</property>
+    <property name="default-width">500</property>
     <property name="default-height">600</property>
     <property name="content">
       <object class="AdwToolbarView">
@@ -50,8 +50,6 @@
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="focus_on_click">True</property>
-               <!-- <signal name="clicked" handler="on_button_clicked1" swapped="no"/>
-                 <property name="margin-bottom">100</property> -->
               </object>
             </child>
             <child>
