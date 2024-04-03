@@ -38,6 +38,57 @@ def afficher_contenu_repertoire(chemin):
 
 afficher_contenu_repertoire("/app/share/gconvert/gconvert")
 
+def filters(dialog):
+    # Filtre pour les images PNG, JPEG et vidéos MP4
+    filter_media = Gtk.FileFilter()
+    filter_media.set_name("Formats pris en charge")
+    filter_media.add_mime_type("image/png")
+    filter_media.add_mime_type("image/jpeg")
+    filter_media.add_mime_type("video/mp4")
+    filter_media.add_mime_type("video/webm")
+    dialog.add_filter(filter_media)
+
+    # Filtre pour les images PNG, JPEG et vidéos MP4
+    filter_jpeg = Gtk.FileFilter()
+    filter_jpeg.set_name("Images JPEG")
+    filter_jpeg.add_mime_type("image/jpeg")
+    dialog.add_filter(filter_jpeg)
+
+    # Filtre pour les images PNG, JPEG et vidéos MP4
+    filter_png = Gtk.FileFilter()
+    filter_png.set_name("Images PNG")
+    filter_png.add_mime_type("image/png")
+    dialog.add_filter(filter_png)
+
+    # Filtre pour les images PNG, JPEG et vidéos MP4
+    filter_mp4 = Gtk.FileFilter()
+    filter_mp4.set_name("Vidéos MP4")
+    filter_mp4.add_mime_type("video/mp4")
+    dialog.add_filter(filter_mp4)
+
+    # Filtre pour les images PNG, JPEG et vidéos MP4
+    filter_webm = Gtk.FileFilter()
+    filter_webm.set_name("Vidéos WEBM")
+    filter_webm.add_mime_type("video/webm")
+    dialog.add_filter(filter_webm)
+
+    svg_filter = Gtk.FileFilter()
+    svg_filter.set_name("Fichiers SVG")
+    svg_filter.add_mime_type("image/svg+xml")
+    dialog.add_filter(svg_filter)
+
+def convert_img(form,input_image_path, output_image_path):
+    try:
+        # Ouvre l'image
+        with Image.open(input_image_path) as img:
+            # Enregistre l'image dans le format choisi
+            img.save(output_image_path, format=form)
+        print("L'image a été convertie en avec succès.")
+    except IOError:
+        print("Impossible de convertir l'image.")
+
+
+
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
 class GconvertWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GconvertWindow'
@@ -49,62 +100,70 @@ class GconvertWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.liste.set_text("Nouveau texte")
         self.Global_box.set_orientation(Gtk.Orientation.VERTICAL)
-        self.btn.connect("clicked", self.on_button_clicked1)
-        self.my_combobox.append_text("Option 1")
+        self.btn.connect("clicked", self.convert)
         self.my_combobox.connect("changed", self.on_my_combo_box_changed)
         self.button = Gtk.Button(label='Ouvrir un fichier')
-        self.button.connect('clicked', self.on_open_file_button_clicked1)
+        self.button.connect('clicked', self.load_file)
         self.Global_box.append(self.button)
+        self.btn_sort = Gtk.Button(label='enregistrer un fichier')
+        self.btn_sort.connect('clicked', self.save_file)
+        self.Global_box.append(self.btn_sort)
 
 
-    def on_open_file_button_clicked1(self, button):
+    def load_file(self, button):
         dialog = Gtk.FileChooserNative(title="Ouvrir un fichier", transient_for=self)
-        #dialog.add_button("Annuler", Gtk.ResponseType.CANCEL)
-        #dialog.add_button("Ouvrir", Gtk.ResponseType.ACCEPT)
 
-        # Filtre pour les images PNG, JPEG et vidéos MP4
-        filter_media = Gtk.FileFilter()
-        filter_media.set_name("Formats pris en charge")
-        filter_media.add_mime_type("image/png")
-        filter_media.add_mime_type("image/jpeg")
-        filter_media.add_mime_type("video/mp4")
-        dialog.add_filter(filter_media)
+        filters(dialog)
 
-        dialog.connect("response", self.on_file_chooser_response)
+        dialog.connect("response", self.load_response)
         dialog.show()
 
-    def on_file_chooser_response(self, dialog, response):
+    def load_response(self, dialog, response):
         if response == Gtk.ResponseType.ACCEPT:
+            active_filter = dialog.get_filter().get_name()
+            print("Le filtre actif est :", active_filter)
             self.file = dialog.get_file()
+            try:
+                # Tentative d'ouverture du fichier comme une image
+                with Image.open(self.file.get_path()) as img:
+                    # Si l'ouverture réussit, le fichier est probablement une image
+                    print("c'est une image")
+                    self.my_combobox.remove_all()
+                    self.my_combobox.append_text("png")
+                    self.my_combobox.append_text("jpg")
+                    self.my_combobox.append_text("gif")
+                    self.my_combobox.append_text("svg")
+            except:
+                # Si une erreur se produit lors de l'ouverture du fichier, il n'est pas une image
+                print("ce n'est pas une image")
+                self.my_combobox.remove_all()
+                self.my_combobox.append_text("mp4")
+                self.my_combobox.append_text("webm")
+
             print(self.file.get_path())
             self.file_name = os.path.basename(self.file.get_path())
             self.button.set_label(self.file_name)
         dialog.destroy()
 
+    def save_response(self, dialog, response):
+        self.output_path = dialog.get_file().get_path()
+        print(self.output_path)
 
-    def on_button_clicked1(self,widget):
-        # Ouvrir l'image à partir du chemin spécifié
-        image = Image.open(self.file.get_path())
-
-        # Convertir l'image en PNG
-        image_png = image.convert('RGB')
-
-        # Définir le chemin de sauvegarde pour l'image convertie
-        output_directory = "/home/quentin/Images"
-        output_filename = "image_convet.png"
-        output_path = os.path.join(output_directory, output_filename)
-
-        # Enregistrer l'image convertie dans le répertoire spécifié
-        image_png.save(output_path, 'JPG')
-
-    def on_button_clicked2(self,widget):
+    def save_file(self,widget):
         dialog = Gtk.FileChooserNative(title="Ouvrir un fichier",action=Gtk.FileChooserAction.SAVE, transient_for=self)
-        dialog.connect("response", self.on_file_chooser_response)
+
+        dialog.set_current_name("image.png")
+
+
+        dialog.connect("response", self.save_response)
         dialog.show()
 
     def on_my_combo_box_changed(self,widget):
         selected_option = self.my_combobox.get_active_text()
         print("Option sélectionnée :", selected_option)
 
+    def convert(self,widget):
+        self.format = self.my_combobox.get_active_text()
+        print(self.format)
+        convert_img(self.format,self.file.get_path(),self.output_path)

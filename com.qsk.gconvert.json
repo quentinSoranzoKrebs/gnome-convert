@@ -37,6 +37,18 @@
             "pip3 install --prefix=/app --no-cache-dir pillow"
         ]
     },
+    {
+        "name": "ffmpeg",
+        "buildsystem": "simple",
+        "build-options": {
+          "build-args": [
+            "--share=network"
+          ]
+        },
+        "build-commands": [
+            "pip3 install --prefix=/app --no-cache-dir ffmpeg"
+        ]
+    },
         {
             "name": "gconvert",
             "builddir": true,

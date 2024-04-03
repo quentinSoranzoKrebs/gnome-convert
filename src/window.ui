@@ -31,7 +31,7 @@
             <!-- Child pour le GtkLabel -->
             <child>
               <object class="GtkLabel" id="liste">
-                <property name="label">Hello, World!</property>
+                <property name="label">Gnome-convert</property>
                 <property name="halign">start</property>
                 <property name="valign">start</property>
                 <style>
@@ -43,12 +43,12 @@
             <child>
               <object class="GtkButton" id="btn">
                 <property name="label">Convertir</property>
-                <property name="visible">True</property>
                 <property name="tooltip-text" translatable="yes">Convertir le fichier</property>
                 <property name="width-request">50</property>
                 <property name="height-request">20</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
+                <property name="visible">False</property>
                 <property name="focus_on_click">True</property>
               </object>
             </child>
@@ -61,7 +61,7 @@
                     <columns>
                       <column type="gchararray"/>
                     </columns>
-                    <data>
+                    <!-- <data>
                       <row>
                         <col id="0">Option 1</col>
                       </row>
@@ -71,10 +71,18 @@
                       <row>
                         <col id="0">Option 3</col>
                       </row>
-                    </data>
+                    </data>-->
                   </object>
                 </child>
                 <property name="model">liststore</property>
+              </object>
+            </child>
+            <child>
+              <!-- Définition du conteneur de la fenêtre -->
+              <object class="GtkImage" id="image">
+                <property name="visible">True</property>
+                <property name="icon-name">resource:///com/qsk/gconvert/logo_5.png</property>
+                <!-- Propriété icon-name peut être utilisée pour spécifier l'image -->
               </object>
             </child>
           </object>
