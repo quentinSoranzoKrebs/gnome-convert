@@ -93,22 +93,24 @@ def convert_img(form,input_image_path, output_image_path):
 class GconvertWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GconvertWindow'
 
-    liste = Gtk.Template.Child()
-    Global_box = Gtk.Template.Child()
-    btn = Gtk.Template.Child()
-    my_combobox = Gtk.Template.Child()
+
+    label = Gtk.Template.Child()
+    box = Gtk.Template.Child()
+    button1 = Gtk.Template.Child()
+    combo_box = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.Global_box.set_orientation(Gtk.Orientation.VERTICAL)
-        self.btn.connect("clicked", self.convert)
-        self.my_combobox.connect("changed", self.on_my_combo_box_changed)
+        self.box.set_orientation(Gtk.Orientation.VERTICAL)
+        self.button1.connect("clicked", self.convert)
+        self.combo_box.connect("changed", self.on_my_combo_box_changed)
         self.button = Gtk.Button(label='Ouvrir un fichier')
         self.button.connect('clicked', self.load_file)
-        self.Global_box.append(self.button)
+        self.box.append(self.button)
         self.btn_sort = Gtk.Button(label='enregistrer un fichier')
         self.btn_sort.connect('clicked', self.save_file)
-        self.Global_box.append(self.btn_sort)
+        self.box.append(self.btn_sort)
+
 
 
     def load_file(self, button):
@@ -129,17 +131,17 @@ class GconvertWindow(Adw.ApplicationWindow):
                 with Image.open(self.file.get_path()) as img:
                     # Si l'ouverture réussit, le fichier est probablement une image
                     print("c'est une image")
-                    self.my_combobox.remove_all()
-                    self.my_combobox.append_text("png")
-                    self.my_combobox.append_text("jpg")
-                    self.my_combobox.append_text("gif")
-                    self.my_combobox.append_text("svg")
+                    self.combo_box.remove_all()
+                    self.combo_box.append_text("png")
+                    self.combo_box.append_text("jpg")
+                    self.combo_box.append_text("gif")
+                    self.combo_box.append_text("svg")
             except:
                 # Si une erreur se produit lors de l'ouverture du fichier, il n'est pas une image
                 print("ce n'est pas une image")
-                self.my_combobox.remove_all()
-                self.my_combobox.append_text("mp4")
-                self.my_combobox.append_text("webm")
+                self.combo_box.remove_all()
+                self.combo_box.append_text("mp4")
+                self.combo_box.append_text("webm")
 
             print(self.file.get_path())
             self.file_name = os.path.basename(self.file.get_path())
@@ -160,10 +162,10 @@ class GconvertWindow(Adw.ApplicationWindow):
         dialog.show()
 
     def on_my_combo_box_changed(self,widget):
-        selected_option = self.my_combobox.get_active_text()
+        selected_option = self.combo_box.get_active_text()
         print("Option sélectionnée :", selected_option)
 
     def convert(self,widget):
-        self.format = self.my_combobox.get_active_text()
+        self.format = self.combo_box.get_active_text()
         print(self.format)
         convert_img(self.format,self.file.get_path(),self.output_path)
