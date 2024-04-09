@@ -77,18 +77,6 @@ def filters(dialog):
     svg_filter.add_mime_type("image/svg+xml")
     dialog.add_filter(svg_filter)
 
-def convert_img(form,input_image_path, output_image_path):
-    try:
-        # Ouvre l'image
-        with Image.open(input_image_path) as img:
-            # Enregistre l'image dans le format choisi
-            img.save(output_image_path, format=form)
-        print("L'image a été convertie en avec succès.")
-    except IOError:
-        print("Impossible de convertir l'image.")
-
-
-
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
 class GconvertWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GconvertWindow'
@@ -98,18 +86,17 @@ class GconvertWindow(Adw.ApplicationWindow):
     box = Gtk.Template.Child()
     button1 = Gtk.Template.Child()
     combo_box = Gtk.Template.Child()
+    btn_sort = Gtk.Template.Child()
+    btn_load = Gtk.Template.Child()
+    convert_bar = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.box.set_orientation(Gtk.Orientation.VERTICAL)
         self.button1.connect("clicked", self.convert)
         self.combo_box.connect("changed", self.on_my_combo_box_changed)
-        self.button = Gtk.Button(label='Ouvrir un fichier')
-        self.button.connect('clicked', self.load_file)
-        self.box.append(self.button)
-        self.btn_sort = Gtk.Button(label='enregistrer un fichier')
+        self.btn_load.connect('clicked', self.load_file)
         self.btn_sort.connect('clicked', self.save_file)
-        self.box.append(self.btn_sort)
 
 
 
@@ -145,7 +132,7 @@ class GconvertWindow(Adw.ApplicationWindow):
 
             print(self.file.get_path())
             self.file_name = os.path.basename(self.file.get_path())
-            self.button.set_label(self.file_name)
+            self.button1.set_label(self.file_name)
         dialog.destroy()
 
     def save_response(self, dialog, response):
@@ -168,4 +155,23 @@ class GconvertWindow(Adw.ApplicationWindow):
     def convert(self,widget):
         self.format = self.combo_box.get_active_text()
         print(self.format)
-        convert_img(self.format,self.file.get_path(),self.output_path)
+        self.convert_img(self.format,self.file.get_path(),self.output_path)
+
+
+    def convert_img(self,form,input_image_path, output_image_path):
+        self.convert_bar.set_visible(True)
+        self.convert_bar.set_fraction(0.3)
+        try:
+            # Ouvre l'image
+            with Image.open(input_image_path) as img:
+                self.convert_bar.set_fraction(0.6)
+
+                img.save(output_image_path, format=form, save_all=True, optimize=True, quality=95, progressive=True, method=3, icc_profile=None, exif=None, qtables=None, subsampling=0, quantization=0, offset=0, progress=progress)
+            print("L'image a été convertie en avec succès.")
+            self.convert_bar.set_fraction(1)
+        except IOError:
+            print("Impossible de convertir l'image.")
+
+        def convert_vid(self,form,input_image_path, output_image_path):
+            pass
+

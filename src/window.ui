@@ -30,14 +30,49 @@
               </object>
             </child>
             <child>
+              <object class="GtkButton" id="btn_load">
+                <property name="halign">center</property>
+                <property name="hexpand">True</property>
+                <property name="label">ouvrir un fichier</property>
+                <property name="valign">end</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_sort">
+                <property name="halign">center</property>
+                <property name="hexpand">True</property>
+                <property name="label">fichier de sortie</property>
+                <property name="valign">end</property>
+              </object>
+            </child>
+            <child>
               <object class="GtkButton" id="button1">
                 <property name="halign">center</property>
                 <property name="hexpand">True</property>
                 <property name="label">convertion</property>
                 <property name="valign">end</property>
                 <style>
-                  <class name="blue-rounded-button"/>
+                  <class name="bluebtn"/>
                 </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkProgressBar" id="convert_bar">
+                <property name="fraction">0</property>
+                <property name="visible">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkListBox">
+                <child>
+                  <object class="GtkButton"/>
+                </child>
+                <child>
+                  <object class="GtkButton"/>
+                </child>
+                <child>
+                  <object class="GtkButton"/>
+                </child>
               </object>
             </child>
           </object>
