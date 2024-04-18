@@ -20,9 +20,24 @@
 from gi.repository import Adw
 from gi.repository import Gtk
 from PIL import Image
+import ffmpeg
 from gconvert import main
 import os
+import subprocess
 
+def get_installed_packages():
+    try:
+        # Exécutez la commande "pip freeze" via subprocess
+        result = subprocess.run(['pip', 'freeze'], capture_output=True, text=True, check=True)
+        # Récupérez et retournez la sortie de la commande
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        print(f"Error: {e}")
+        return None
+
+# Appel de la fonction pour obtenir la liste des paquets installés
+installed_packages = get_installed_packages()
+print(installed_packages)
 
 def afficher_contenu_repertoire(chemin):
     # Vérifier si le chemin spécifié est un répertoire
@@ -76,6 +91,9 @@ def filters(dialog):
     svg_filter.set_name("Fichiers SVG")
     svg_filter.add_mime_type("image/svg+xml")
     dialog.add_filter(svg_filter)
+
+def progress_callback(progress):
+    print(f'Progress: {progress:.2%}')
 
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
 class GconvertWindow(Adw.ApplicationWindow):
@@ -155,7 +173,7 @@ class GconvertWindow(Adw.ApplicationWindow):
     def convert(self,widget):
         self.format = self.combo_box.get_active_text()
         print(self.format)
-        self.convert_img(self.format,self.file.get_path(),self.output_path)
+        self.convert_vid(self.format,self.file.get_path(),self.output_path)
 
 
     def convert_img(self,form,input_image_path, output_image_path):
@@ -172,6 +190,16 @@ class GconvertWindow(Adw.ApplicationWindow):
         except IOError:
             print("Impossible de convertir l'image.")
 
-        def convert_vid(self,form,input_image_path, output_image_path):
-            pass
+
+    def convert_vid(self,form,input_file_path, output_file_path):
+
+        # Définition du filtre de conversion
+        input_stream = ffmpeg.input(input_file_path)
+        output_stream = ffmpeg.output(input_stream, output_file_path)
+
+        # Ajout d'un callback pour afficher la progression
+        output_stream = output_stream.global_args('-progress', 'pipe:1')
+
+        # Lancer la conversion
+        ffmpeg.run(output_stream)
 

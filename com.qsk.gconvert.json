@@ -46,7 +46,7 @@
           ]
         },
         "build-commands": [
-            "pip3 install --prefix=/app --no-cache-dir ffmpeg"
+            "pip3 install --prefix=/app --no-cache-dir ffmpeg-python"
         ]
     },
         {
