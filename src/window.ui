@@ -52,7 +52,7 @@
                 <property name="label">convertion</property>
                 <property name="valign">end</property>
                 <style>
-                  <class name="bluebtn"/>
+                  <class name="small"/>
                 </style>
               </object>
             </child>
