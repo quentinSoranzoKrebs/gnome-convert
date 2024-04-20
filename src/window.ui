@@ -43,6 +43,9 @@
                 <property name="hexpand">True</property>
                 <property name="label">fichier de sortie</property>
                 <property name="valign">end</property>
+                <style>
+                  <class name="pill"/>
+                </style>
               </object>
             </child>
             <child>
@@ -52,7 +55,7 @@
                 <property name="label">convertion</property>
                 <property name="valign">end</property>
                 <style>
-                  <class name="small"/>
+                  <class name="green-button"/>
                 </style>
               </object>
             </child>
