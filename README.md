@@ -9,10 +9,9 @@ Gnome Convert offre une interface utilisateur intuitive pour convertir différen
 
 ## Caractéristiques
 
- {% comment %} - **Interface Intuitive** : L'application dispose d'une interface propre et conviviale, conçue pour rendre la conversion d'unités facile et intuitive.
-- **Multiples Catégories** : Gnome Convert prend en charge la conversion dans diverses catégories telles que la longueur, la superficie, le volume, la température, etc.
+- **Interface Intuitive** : L'application dispose d'une interface propre et conviviale, conçue pour rendre la conversion d'images facile et intuitive.
+- **Multiples Catégories** : Gnome Convert prend en charge la conversion dans diverses catégories.
 - **Options de Personnalisation** : Les utilisateurs peuvent personnaliser l'application selon leurs préférences, notamment en sélectionnant leurs unités favorites et en ajustant les paramètres.
-- **Historique** : Gnome Convert conserve l'historique des conversions récentes, permettant aux utilisateurs de rapidement se référer à des calculs antérieurs.
 
 ## Installation
 
