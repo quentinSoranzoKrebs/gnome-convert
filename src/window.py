@@ -100,7 +100,7 @@ class GconvertWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GconvertWindow'
 
 
-    label = Gtk.Template.Child()
+    '''label = Gtk.Template.Child()
     box = Gtk.Template.Child()
     button1 = Gtk.Template.Child()
     combo_box = Gtk.Template.Child()
@@ -202,4 +202,4 @@ class GconvertWindow(Adw.ApplicationWindow):
 
         # Lancer la conversion
         ffmpeg.run(output_stream)
-
+'''
