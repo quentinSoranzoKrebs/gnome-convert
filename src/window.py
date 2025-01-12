@@ -28,7 +28,7 @@ import subprocess
 def get_installed_packages():
     try:
         # Exécutez la commande "pip freeze" via subprocess
-        result = subprocess.run(['pip', 'freeze'], capture_output=True, text=True, check=True)
+        result = subprocess.run(['pip3', 'freeze'], capture_output=True, text=True, check=True)
         # Récupérez et retournez la sortie de la commande
         return result.stdout
     except subprocess.CalledProcessError as e:
@@ -36,8 +36,8 @@ def get_installed_packages():
         return None
 
 # Appel de la fonction pour obtenir la liste des paquets installés
-installed_packages = get_installed_packages()
-print(installed_packages)
+#installed_packages = get_installed_packages()
+#print(installed_packages)
 
 def afficher_contenu_repertoire(chemin):
     # Vérifier si le chemin spécifié est un répertoire
