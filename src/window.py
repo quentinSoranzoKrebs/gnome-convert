@@ -99,26 +99,35 @@ def progress_callback(progress):
 class GconvertWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GconvertWindow'
 
-
+    next1 = Gtk.Template.Child()
+    next2 = Gtk.Template.Child()
+    stack = Gtk.Template.Child()
     '''label = Gtk.Template.Child()
     box = Gtk.Template.Child()
     button1 = Gtk.Template.Child()
     combo_box = Gtk.Template.Child()
     btn_sort = Gtk.Template.Child()
     btn_load = Gtk.Template.Child()
-    convert_bar = Gtk.Template.Child()
+    convert_bar = Gtk.Template.Child()'''
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.box.set_orientation(Gtk.Orientation.VERTICAL)
+        self.next1.connect("clicked", self.page2)
+        self.next2.connect("clicked", self.page1)
+        '''self.box.set_orientation(Gtk.Orientation.VERTICAL)
         self.button1.connect("clicked", self.convert)
         self.combo_box.connect("changed", self.on_my_combo_box_changed)
         self.btn_load.connect('clicked', self.load_file)
-        self.btn_sort.connect('clicked', self.save_file)
+        self.btn_sort.connect('clicked', self.save_file)'''
+
+    def page1(self, button):
+        self.stack.set_visible_child_name("page1")
 
 
+    def page2(self, button):
+        self.stack.set_visible_child_name("page2")
 
-    def load_file(self, button):
+    '''def load_file(self, button):
         dialog = Gtk.FileChooserNative(title="Ouvrir un fichier", transient_for=self)
 
         filters(dialog)
@@ -203,3 +212,4 @@ class GconvertWindow(Adw.ApplicationWindow):
         # Lancer la conversion
         ffmpeg.run(output_stream)
 '''
+
