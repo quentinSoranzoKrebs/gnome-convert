@@ -139,7 +139,7 @@ class ListBoxRow(Gtk.ListBoxRow):
         if self.mime_type.startswith("video/"):
             for format in file_formats.get("video"):
                 combo_box.append_text(file_formats["video"][format])
-        combo_box.set_active(int(find_key(self.mime_type,file_formats["image"])))
+        combo_box.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
         hbox.append(combo_box)
 
         #self.listbox.prepend(row)
