@@ -18,3 +18,9 @@ button.pill.small {
   margin: 0;
   padding: 1px 12px;
 }
+
+.logo {
+    min-width: 200px;
+    min-height: 200px;
+}
+

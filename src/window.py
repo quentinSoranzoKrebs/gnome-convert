@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from gi.repository import Adw
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 from PIL import Image
 import ffmpeg
 from gconvert import main
@@ -51,7 +51,8 @@ def afficher_contenu_repertoire(chemin):
     else:
         print("Le chemin spécifié n'est pas un répertoire.")
 
-afficher_contenu_repertoire("/app/share/gconvert/gconvert")
+#afficher_contenu_repertoire("/app/share/gconvert/gconvert")
+afficher_contenu_repertoire("/com/qsk/gconvert/")
 
 def filters(dialog):
     # Filtre pour les images PNG, JPEG et vidéos MP4
@@ -95,6 +96,54 @@ def filters(dialog):
 def progress_callback(progress):
     print(f'Progress: {progress:.2%}')
 
+def find_key(valeur_cible: str, dictionnaire):
+    for clé, valeur in dictionnaire.items():
+        if valeur == valeur_cible:
+            clé_trouvée = clé
+            break
+    return clé
+
+file_formats = {"image": {"0":"image/jpg","1":"image/png","2":"image/gif","3":"image/svg"},
+                "video": {"0":"video/mp4","1":"video/webm"}}
+
+class ListBoxRow(Gtk.ListBoxRow):
+    def __init__(self, input_file, file_format):
+        super().__init__()
+        self.input_file = input_file
+        self.path = self.input_file.get_path()
+        self.name = os.path.basename(self.path)
+        self.format = file_format
+
+        # Obtenir les métadonnées du fichier
+        file_info = self.input_file.query_info("standard::*", Gio.FileQueryInfoFlags.NONE, None)
+        mime_type = file_info.get_content_type()
+        print(f"Type MIME : {mime_type}")
+
+        self.mime_type = mime_type
+
+        # Créer une boîte horizontale pour contenir le Label et le ComboBox
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        self.set_child(hbox)
+
+        label = Gtk.Label(label=self.name)
+        label.set_margin_start(10)
+        label.set_margin_end(10)
+        label.set_margin_top(5)
+        label.set_margin_bottom(5)
+        hbox.append(label)
+
+        combo_box = Gtk.ComboBoxText()
+        if self.mime_type.startswith("image/"):
+            for format in file_formats.get("image"):
+                combo_box.append_text(file_formats["image"][format])
+        if self.mime_type.startswith("video/"):
+            for format in file_formats.get("video"):
+                combo_box.append_text(file_formats["video"][format])
+        combo_box.set_active(int(find_key(self.mime_type,file_formats["image"])))
+        hbox.append(combo_box)
+
+        #self.listbox.prepend(row)
+
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
 class GconvertWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GconvertWindow'
@@ -102,6 +151,8 @@ class GconvertWindow(Adw.ApplicationWindow):
     next1 = Gtk.Template.Child()
     next2 = Gtk.Template.Child()
     stack = Gtk.Template.Child()
+    listbox = Gtk.Template.Child()
+    addbox = Gtk.Template.Child()
     '''label = Gtk.Template.Child()
     box = Gtk.Template.Child()
     button1 = Gtk.Template.Child()
@@ -120,6 +171,11 @@ class GconvertWindow(Adw.ApplicationWindow):
         self.btn_load.connect('clicked', self.load_file)
         self.btn_sort.connect('clicked', self.save_file)'''
 
+        # Ajouter un GtkGestureClick au bouton ajouter
+        gesture = Gtk.GestureClick()
+        gesture.connect("pressed", self.load_file, self.addbox)
+        self.addbox.add_controller(gesture)
+
     def page1(self, button):
         self.stack.set_visible_child_name("page1")
 
@@ -127,7 +183,9 @@ class GconvertWindow(Adw.ApplicationWindow):
     def page2(self, button):
         self.stack.set_visible_child_name("page2")
 
-    '''def load_file(self, button):
+    #@Gtk.Template.Callback()
+    def load_file(self,gesture, n_press, x, y, row):
+        print("cliqué")
         dialog = Gtk.FileChooserNative(title="Ouvrir un fichier", transient_for=self)
 
         filters(dialog)
@@ -136,6 +194,40 @@ class GconvertWindow(Adw.ApplicationWindow):
         dialog.show()
 
     def load_response(self, dialog, response):
+        if response == Gtk.ResponseType.ACCEPT:
+            active_filter = dialog.get_filter().get_name()
+            print("Le filtre actif est :", active_filter)
+            self.file = dialog.get_file()
+            '''try:
+                # Tentative d'ouverture du fichier comme une image
+                with Image.open(self.file.get_path()) as img:
+                    # Si l'ouverture réussit, le fichier est probablement une image
+                    print("c'est une image")
+                    self.combo_box.remove_all()
+                    self.combo_box.append_text("png")
+                    self.combo_box.append_text("jpg")
+                    self.combo_box.append_text("gif")
+                    self.combo_box.append_text("svg")
+            except:
+                # Si une erreur se produit lors de l'ouverture du fichier, il n'est pas une image
+                print("ce n'est pas une image")
+                self.combo_box.remove_all()
+                self.combo_box.append_text("mp4")
+                self.combo_box.append_text("webm")'''
+
+            #print(self.file.get_path())
+
+            #self.button1.set_label(self.file_name)
+
+            row = ListBoxRow(self.file,"png")
+            print(row.path)
+            print(row.name)
+            self.listbox.prepend(row)
+
+        dialog.destroy()
+
+
+    '''def load_response(self, dialog, response):
         if response == Gtk.ResponseType.ACCEPT:
             active_filter = dialog.get_filter().get_name()
             print("Le filtre actif est :", active_filter)
@@ -160,9 +252,9 @@ class GconvertWindow(Adw.ApplicationWindow):
             print(self.file.get_path())
             self.file_name = os.path.basename(self.file.get_path())
             self.button1.set_label(self.file_name)
-        dialog.destroy()
+        dialog.destroy()'''
 
-    def save_response(self, dialog, response):
+    '''def save_response(self, dialog, response):
         self.output_path = dialog.get_file().get_path()
         print(self.output_path)
 
