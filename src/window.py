@@ -122,7 +122,7 @@ class ListBoxRow(Gtk.ListBoxRow):
         self.mime_type = mime_type
 
         # Créer une boîte horizontale pour contenir le Label et le ComboBox
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)# set_homogeneous=True)
         self.set_child(hbox)
 
         label = Gtk.Label(label=self.name)
@@ -130,7 +130,13 @@ class ListBoxRow(Gtk.ListBoxRow):
         label.set_margin_end(10)
         label.set_margin_top(5)
         label.set_margin_bottom(5)
+        label.set_hexpand(True)
+        label.set_halign(Gtk.Align.START)
         hbox.append(label)
+
+        # Créer une boîte horizontale pour contenir le Label et le ComboBox
+        combobox_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)# set_homogeneous=True)
+        hbox.append(combobox_box)
 
         combo_box = Gtk.ComboBoxText()
         if self.mime_type.startswith("image/"):
@@ -140,7 +146,20 @@ class ListBoxRow(Gtk.ListBoxRow):
             for format in file_formats.get("video"):
                 combo_box.append_text(file_formats["video"][format])
         combo_box.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
-        hbox.append(combo_box)
+        combobox_box.append(combo_box)
+
+        label_array = Gtk.Label(label="⟶")
+        combobox_box.append(label_array)
+
+        combo_box2 = Gtk.ComboBoxText()
+        if self.mime_type.startswith("image/"):
+            for format in file_formats.get("image"):
+                combo_box2.append_text(file_formats["image"][format])
+        if self.mime_type.startswith("video/"):
+            for format in file_formats.get("video"):
+                combo_box2.append_text(file_formats["video"][format])
+        combo_box2.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
+        combobox_box.append(combo_box2)
 
         #self.listbox.prepend(row)
 
