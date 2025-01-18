@@ -20,7 +20,11 @@ button.pill.small {
 }
 
 .logo {
-    min-width: 200px;
-    min-height: 200px;
+  min-width: 200px;
+  min-height: 200px;
 }
 
+.next-btn {
+  border-radius: 99px;
+  padding: 10px 32px;
+}

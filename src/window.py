@@ -18,7 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 from gi.repository import Adw
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk, Gio, Pango
 from PIL import Image
 import ffmpeg
 from gconvert import main
@@ -126,6 +126,8 @@ class ListBoxRow(Gtk.ListBoxRow):
         self.set_child(hbox)
 
         label = Gtk.Label(label=self.name)
+        label.set_ellipsize(Pango.EllipsizeMode.END)  # Tronquer à la fin avec des points (...)
+        #label.set_max_width_chars(10)  # Optionnel : Limiter à un certain nombre de caractères visibles
         label.set_margin_start(10)
         label.set_margin_end(10)
         label.set_margin_top(5)
@@ -172,6 +174,7 @@ class GconvertWindow(Adw.ApplicationWindow):
     stack = Gtk.Template.Child()
     listbox = Gtk.Template.Child()
     addbox = Gtk.Template.Child()
+    main_contain = Gtk.Template.Child()
     '''label = Gtk.Template.Child()
     box = Gtk.Template.Child()
     button1 = Gtk.Template.Child()

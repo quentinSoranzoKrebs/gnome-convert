@@ -18,7 +18,7 @@
 	(1,5,"AdwViewStack","stack",2,None,None,None,2,None,None),
 	(1,6,"AdwViewStackPage",None,5,None,None,None,0,None,None),
 	(1,7,"GtkScrolledWindow",None,6,None,None,None,0,None,None),
-	(1,8,"GtkBox",None,7,None,None,None,0,None,None),
+	(1,8,"GtkBox","main_contain",7,None,None,None,0,None,None),
 	(1,9,"GtkPicture","logo",8,None,None,None,0,None,None),
 	(1,10,"GtkLabel",None,8,None,None,None,1,None,None),
 	(1,11,"GtkListBox","listbox",8,None,None,None,2,None,None),
@@ -71,8 +71,8 @@
 	(1,6,"AdwViewStackPage","visible","False",None,None,None,None,None,None,None,None,None),
 	(1,8,"GtkOrientable","orientation","vertical",0,None,None,None,None,None,None,None,None),
 	(1,8,"GtkWidget","margin-bottom","30",0,None,None,None,None,None,None,None,None),
-	(1,8,"GtkWidget","margin-end","60",0,None,None,None,None,None,None,None,None),
-	(1,8,"GtkWidget","margin-start","60",0,None,None,None,None,None,None,None,None),
+	(1,8,"GtkWidget","margin-end","10",0,None,None,None,None,None,None,None,None),
+	(1,8,"GtkWidget","margin-start","10",0,None,None,None,None,None,None,None,None),
 	(1,8,"GtkWidget","margin-top","30",0,None,None,None,None,None,None,None,None),
 	(1,9,"CmbAccessibleRelation","cmb-a11y-relation-row-count","-2",None,None,None,None,None,None,None,None,None),
 	(1,9,"GtkPicture","alternative-text","logo",None,None,None,None,None,None,None,None,None),
@@ -85,8 +85,9 @@
 	(1,10,"GtkWidget","halign","center",0,None,None,None,None,None,None,None,None),
 	(1,10,"GtkWidget","margin-bottom","12",None,None,None,None,None,None,None,None,None),
 	(1,11,"GtkListBox","selection-mode","none",0,None,None,None,None,None,None,None,None),
+	(1,11,"GtkWidget","margin-bottom","14",None,None,None,None,None,None,None,None,None),
 	(1,12,"GtkWidget","valign","center",None,None,None,None,None,None,None,None,None),
-	(1,14,"GtkButton","label","next",0,None,None,None,None,None,None,None,None),
+	(1,14,"GtkButton","label","Convert",None,None,None,None,None,None,None,None,None),
 	(1,14,"GtkWidget","halign","center",0,None,None,None,None,None,None,None,None),
 	(1,15,"AdwViewStackPage","child",None,0,None,None,None,16,None,None,None,None),
 	(1,15,"AdwViewStackPage","name","page2",0,None,None,None,None,None,None,None,None),
@@ -165,8 +166,7 @@
 	(1,46,"(item)","action","app.aide",0,None,None,None,None,None,None,None,None),
 	(1,46,"(item)","label","_Aide",1,None,None,None,None,None,None,None,None),
 	(1,49,"GtkWidget","halign","center",None,None,None,None,None,None,None,None,None),
-	(1,50,"GtkLabel","label","+",1,None,None,None,None,None,None,None,None),
-	(1,50,"GtkLabel","mnemonic-widget","32",0,None,None,None,None,None,None,None,None),
+	(1,50,"GtkLabel","label","+",None,None,None,None,None,None,None,None,None),
 	(1,50,"GtkLabel","xalign","0",0,None,None,None,None,None,None,None,None),
 	(1,50,"GtkWidget","halign","center",0,None,None,None,None,None,None,None,None),
 	(1,50,"GtkWidget","valign","center",0,None,None,None,None,None,None,None,None)
@@ -190,7 +190,10 @@
 	(1,18,"GtkWidget",1,1,None,None,None,None,None,None),
 	(1,18,"GtkWidget",2,2,None,1,None,None,None,None),
 	(1,18,"GtkWidget",2,3,None,1,None,None,None,None),
-	(1,9,"GtkWidget",2,2,None,1,None,None,None,None)
+	(1,9,"GtkWidget",2,2,None,1,None,None,None,None),
+	(1,14,"GtkWidget",1,1,None,None,None,None,None,None),
+	(1,14,"GtkWidget",2,2,None,1,None,None,None,None),
+	(1,14,"GtkWidget",2,3,None,1,None,None,None,None)
   </object_data>
   <object_data_arg>
 	(1,3,"GtkWidget",2,2,"name","title-1"),
@@ -200,6 +203,8 @@
 	(1,17,"GtkWidget",2,2,"name","title-2"),
 	(1,18,"GtkWidget",2,2,"name","rich-list"),
 	(1,18,"GtkWidget",2,3,"name","boxed-list"),
-	(1,9,"GtkWidget",2,2,"name","logo")
+	(1,9,"GtkWidget",2,2,"name","logo"),
+	(1,14,"GtkWidget",2,2,"name","suggested-action"),
+	(1,14,"GtkWidget",2,3,"name","next-btn")
   </object_data_arg>
 </cambalache-project>

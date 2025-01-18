@@ -29,10 +29,10 @@
                 <property name="child">
                   <object class="GtkScrolledWindow">
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkBox" id="main_contain">
                         <property name="margin-bottom">30</property>
-                        <property name="margin-end">60</property>
-                        <property name="margin-start">60</property>
+                        <property name="margin-end">10</property>
+                        <property name="margin-start">10</property>
                         <property name="margin-top">30</property>
                         <property name="orientation">vertical</property>
                         <child>
@@ -60,6 +60,7 @@
                         </child>
                         <child>
                           <object class="GtkListBox" id="listbox">
+                            <property name="margin-bottom">14</property>
                             <property name="selection-mode">none</property>
                             <child>
                               <object class="GtkListBoxRow" id="addbox">
@@ -70,8 +71,7 @@
                                     <child>
                                       <object class="GtkLabel">
                                         <property name="halign">center</property>
-                                        <property name="label" translatable="yes">+</property>
-                                        <property name="mnemonic-widget">dropdown_2</property>
+                                        <property name="label">+</property>
                                         <property name="valign">center</property>
                                         <property name="xalign">0</property>
                                       </object>
@@ -90,7 +90,11 @@
                         <child>
                           <object class="GtkButton" id="next1">
                             <property name="halign">center</property>
-                            <property name="label">next</property>
+                            <property name="label">Convert</property>
+                            <style>
+                              <class name="suggested-action"/>
+                              <class name="next-btn"/>
+                            </style>
                           </object>
                         </child>
                       </object>
