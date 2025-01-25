@@ -88,9 +88,11 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkButton" id="next1">
+                          <object class="GtkButton" id="convert_btn">
                             <property name="halign">center</property>
                             <property name="label">Convert</property>
+                            <property name="sensitive">False</property>
+                            <signal name="clicked" handler="convert"/>
                             <style>
                               <class name="suggested-action"/>
                               <class name="next-btn"/>
@@ -110,8 +112,8 @@
                 <property name="child">
                   <object class="GtkBox">
                     <property name="margin-bottom">30</property>
-                    <property name="margin-end">60</property>
-                    <property name="margin-start">60</property>
+                    <property name="margin-end">10</property>
+                    <property name="margin-start">10</property>
                     <property name="margin-top">30</property>
                     <property name="orientation">vertical</property>
                     <child>
@@ -126,137 +128,8 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkListBox">
+                      <object class="GtkListBox" id="convert_listbox">
                         <property name="selection-mode">none</property>
-                        <child>
-                          <object class="GtkListBoxRow">
-                            <property name="activatable">0</property>
-                            <child>
-                              <object class="GtkBox">
-                                <child>
-                                  <object class="GtkLabel" id="scale_label_2">
-                                    <property name="halign">start</property>
-                                    <property name="hexpand">1</property>
-                                    <property name="label" translatable="yes">Scale</property>
-                                    <property name="mnemonic-widget">scale_2</property>
-                                    <property name="valign">center</property>
-                                    <property name="xalign">0</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkScale" id="scale_2">
-                                    <property name="adjustment">
-                                      <object class="GtkAdjustment">
-                                        <property name="page-increment">10</property>
-                                        <property name="step-increment">1</property>
-                                        <property name="upper">100</property>
-                                        <property name="value">50</property>
-                                      </object>
-                                    </property>
-                                    <property name="draw-value">0</property>
-                                    <property name="halign">end</property>
-                                    <property name="valign">center</property>
-                                    <property name="width-request">150</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkListBoxRow">
-                            <property name="activatable">0</property>
-                            <child>
-                              <object class="GtkBox">
-                                <child>
-                                  <object class="GtkLabel" id="spin_label_2">
-                                    <property name="halign">start</property>
-                                    <property name="hexpand">1</property>
-                                    <property name="label" translatable="yes">Spinbutton</property>
-                                    <property name="mnemonic-widget">spin_2</property>
-                                    <property name="valign">center</property>
-                                    <property name="xalign">0</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkSpinButton" id="spin_2">
-                                    <property name="adjustment">
-                                      <object class="GtkAdjustment">
-                                        <property name="page-increment">10</property>
-                                        <property name="step-increment">1</property>
-                                        <property name="upper">100</property>
-                                        <property name="value">50</property>
-                                      </object>
-                                    </property>
-                                    <property name="halign">end</property>
-                                    <property name="valign">center</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkListBoxRow">
-                            <property name="activatable">0</property>
-                            <child>
-                              <object class="GtkBox">
-                                <child>
-                                  <object class="GtkLabel" id="dropdown_label_2">
-                                    <property name="halign">start</property>
-                                    <property name="hexpand">1</property>
-                                    <property name="label" translatable="yes">Dropdown</property>
-                                    <property name="mnemonic-widget">dropdown_2</property>
-                                    <property name="valign">center</property>
-                                    <property name="xalign">0</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkDropDown" id="dropdown_2">
-                                    <property name="halign">end</property>
-                                    <property name="model">
-                                      <object class="GtkStringList">
-                                        <items>
-                                          <item>Choice 1</item>
-                                          <item>Choice 2</item>
-                                          <item>Choice 3</item>
-                                          <item>Choice 4</item>
-                                        </items>
-                                      </object>
-                                    </property>
-                                    <property name="valign">center</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkListBoxRow">
-                            <property name="activatable">0</property>
-                            <child>
-                              <object class="GtkBox">
-                                <child>
-                                  <object class="GtkLabel" id="entry_label_2">
-                                    <property name="halign">start</property>
-                                    <property name="hexpand">1</property>
-                                    <property name="label" translatable="yes">Entry</property>
-                                    <property name="mnemonic-widget">entry_2</property>
-                                    <property name="valign">center</property>
-                                    <property name="xalign">0</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkEntry" id="entry_2">
-                                    <property name="halign">end</property>
-                                    <property name="placeholder-text">Type here…</property>
-                                    <property name="valign">center</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                         <style>
                           <class name="rich-list"/>
                           <class name="boxed-list"/>

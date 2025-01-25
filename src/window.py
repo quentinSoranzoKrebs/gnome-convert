@@ -106,6 +106,18 @@ def find_key(valeur_cible: str, dictionnaire):
 file_formats = {"image": {"0":"image/jpg","1":"image/png","2":"image/gif","3":"image/svg"},
                 "video": {"0":"video/mp4","1":"video/webm"}}
 
+def get_children(listbox: Gtk.ListBox) -> tuple:
+    children = []
+    child = listbox.get_first_child()
+    print(child)
+    # Parcours tous les enfants de la ListBox
+    while child is not None:
+        if isinstance(child, Gtk.ListBoxRow):  # Vérifie si c'est un Gtk.Label
+            children.append(child)
+        child = child.get_next_sibling()
+
+    return children
+
 class ListBoxRow(Gtk.ListBoxRow):
     def __init__(self, input_file, file_format):
         super().__init__()
@@ -143,10 +155,10 @@ class ListBoxRow(Gtk.ListBoxRow):
         combo_box = Gtk.ComboBoxText()
         if self.mime_type.startswith("image/"):
             for format in file_formats.get("image"):
-                combo_box.append_text(file_formats["image"][format])
+                combo_box.append_text(file_formats["image"][format].split('/', 1)[1])
         if self.mime_type.startswith("video/"):
             for format in file_formats.get("video"):
-                combo_box.append_text(file_formats["video"][format])
+                combo_box.append_text(file_formats["video"][format].split('/', 1)[1])
         combo_box.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
         combobox_box.append(combo_box)
 
@@ -156,10 +168,10 @@ class ListBoxRow(Gtk.ListBoxRow):
         combo_box2 = Gtk.ComboBoxText()
         if self.mime_type.startswith("image/"):
             for format in file_formats.get("image"):
-                combo_box2.append_text(file_formats["image"][format])
+                combo_box2.append_text(file_formats["image"][format].split('/', 1)[1])
         if self.mime_type.startswith("video/"):
             for format in file_formats.get("video"):
-                combo_box2.append_text(file_formats["video"][format])
+                combo_box2.append_text(file_formats["video"][format].split('/', 1)[1])
         combo_box2.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
         combobox_box.append(combo_box2)
 
@@ -169,12 +181,13 @@ class ListBoxRow(Gtk.ListBoxRow):
 class GconvertWindow(Adw.ApplicationWindow):
     __gtype_name__ = 'GconvertWindow'
 
-    next1 = Gtk.Template.Child()
+    convert_btn = Gtk.Template.Child()
     next2 = Gtk.Template.Child()
     stack = Gtk.Template.Child()
     listbox = Gtk.Template.Child()
     addbox = Gtk.Template.Child()
     main_contain = Gtk.Template.Child()
+    convert_listbox = Gtk.Template.Child()
     '''label = Gtk.Template.Child()
     box = Gtk.Template.Child()
     button1 = Gtk.Template.Child()
@@ -185,7 +198,6 @@ class GconvertWindow(Adw.ApplicationWindow):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.next1.connect("clicked", self.page2)
         self.next2.connect("clicked", self.page1)
         '''self.box.set_orientation(Gtk.Orientation.VERTICAL)
         self.button1.connect("clicked", self.convert)
@@ -198,12 +210,21 @@ class GconvertWindow(Adw.ApplicationWindow):
         gesture.connect("pressed", self.load_file, self.addbox)
         self.addbox.add_controller(gesture)
 
+        #self.listbox.set_selection_mode(Gtk.SelectionMode.MULTIPLE)
+
     def page1(self, button):
         self.stack.set_visible_child_name("page1")
 
-
-    def page2(self, button):
+    @Gtk.Template.Callback()
+    def convert(self, button):
         self.stack.set_visible_child_name("page2")
+
+        children = get_children(self.listbox)
+
+        for child in children:
+            self.listbox.remove(child)
+            self.convert_listbox.append(child)
+        print(children)
 
     #@Gtk.Template.Callback()
     def load_file(self,gesture, n_press, x, y, row):
@@ -220,22 +241,6 @@ class GconvertWindow(Adw.ApplicationWindow):
             active_filter = dialog.get_filter().get_name()
             print("Le filtre actif est :", active_filter)
             self.file = dialog.get_file()
-            '''try:
-                # Tentative d'ouverture du fichier comme une image
-                with Image.open(self.file.get_path()) as img:
-                    # Si l'ouverture réussit, le fichier est probablement une image
-                    print("c'est une image")
-                    self.combo_box.remove_all()
-                    self.combo_box.append_text("png")
-                    self.combo_box.append_text("jpg")
-                    self.combo_box.append_text("gif")
-                    self.combo_box.append_text("svg")
-            except:
-                # Si une erreur se produit lors de l'ouverture du fichier, il n'est pas une image
-                print("ce n'est pas une image")
-                self.combo_box.remove_all()
-                self.combo_box.append_text("mp4")
-                self.combo_box.append_text("webm")'''
 
             #print(self.file.get_path())
 
@@ -245,85 +250,23 @@ class GconvertWindow(Adw.ApplicationWindow):
             print(row.path)
             print(row.name)
             self.listbox.prepend(row)
+            # Récupérer toutes les ListBoxRow de la liste box
+
+
+            #self.listbox.select_all()
+            #listbox_rows = self.listbox.get_selected_rows()
+
+            #listbox_rows = self.listbox.get_first_child()
+            #print(listbox_rows)
+
+            #print("Nombre d'éléments dans la liste box :", len(listbox_rows))
+
+
+            #self.listbox.unselect_all()
+
+
+            self.convert_btn.set_sensitive(True)
 
         dialog.destroy()
 
-
-    '''def load_response(self, dialog, response):
-        if response == Gtk.ResponseType.ACCEPT:
-            active_filter = dialog.get_filter().get_name()
-            print("Le filtre actif est :", active_filter)
-            self.file = dialog.get_file()
-            try:
-                # Tentative d'ouverture du fichier comme une image
-                with Image.open(self.file.get_path()) as img:
-                    # Si l'ouverture réussit, le fichier est probablement une image
-                    print("c'est une image")
-                    self.combo_box.remove_all()
-                    self.combo_box.append_text("png")
-                    self.combo_box.append_text("jpg")
-                    self.combo_box.append_text("gif")
-                    self.combo_box.append_text("svg")
-            except:
-                # Si une erreur se produit lors de l'ouverture du fichier, il n'est pas une image
-                print("ce n'est pas une image")
-                self.combo_box.remove_all()
-                self.combo_box.append_text("mp4")
-                self.combo_box.append_text("webm")
-
-            print(self.file.get_path())
-            self.file_name = os.path.basename(self.file.get_path())
-            self.button1.set_label(self.file_name)
-        dialog.destroy()'''
-
-    '''def save_response(self, dialog, response):
-        self.output_path = dialog.get_file().get_path()
-        print(self.output_path)
-
-    def save_file(self,widget):
-        dialog = Gtk.FileChooserNative(title="Ouvrir un fichier",action=Gtk.FileChooserAction.SAVE, transient_for=self)
-
-        dialog.set_current_name("image.png")
-
-
-        dialog.connect("response", self.save_response)
-        dialog.show()
-
-    def on_my_combo_box_changed(self,widget):
-        selected_option = self.combo_box.get_active_text()
-        print("Option sélectionnée :", selected_option)
-
-    def convert(self,widget):
-        self.format = self.combo_box.get_active_text()
-        print(self.format)
-        self.convert_vid(self.format,self.file.get_path(),self.output_path)
-
-
-    def convert_img(self,form,input_image_path, output_image_path):
-        self.convert_bar.set_visible(True)
-        self.convert_bar.set_fraction(0.3)
-        try:
-            # Ouvre l'image
-            with Image.open(input_image_path) as img:
-                self.convert_bar.set_fraction(0.6)
-
-                img.save(output_image_path, format=form, save_all=True, optimize=True, quality=95, progressive=True, method=3, icc_profile=None, exif=None, qtables=None, subsampling=0, quantization=0, offset=0, progress=progress)
-            print("L'image a été convertie en avec succès.")
-            self.convert_bar.set_fraction(1)
-        except IOError:
-            print("Impossible de convertir l'image.")
-
-
-    def convert_vid(self,form,input_file_path, output_file_path):
-
-        # Définition du filtre de conversion
-        input_stream = ffmpeg.input(input_file_path)
-        output_stream = ffmpeg.output(input_stream, output_file_path)
-
-        # Ajout d'un callback pour afficher la progression
-        output_stream = output_stream.global_args('-progress', 'pipe:1')
-
-        # Lancer la conversion
-        ffmpeg.run(output_stream)
-'''
 
