@@ -107,6 +107,7 @@ file_formats = {"image": {"0":"image/jpg","1":"image/png","2":"image/gif","3":"i
                 "video": {"0":"video/mp4","1":"video/webm"}}
 
 def get_children(listbox: Gtk.ListBox) -> tuple:
+    ''' get all Gtk.ListBox children, just if it's a Gtk.ListBoxRow, and return a tuple '''
     children = []
     child = listbox.get_first_child()
     print(child)
@@ -224,6 +225,17 @@ class GconvertWindow(Adw.ApplicationWindow):
         for child in children:
             self.listbox.remove(child)
             self.convert_listbox.append(child)
+
+            #pour créer un detecteur de progression circulaire il faudra utiliser un gtk.progressbar eet le personnalier en cercle.
+
+            '''# Crée un Gtk.Spinner
+            spinner = Gtk.Spinner()
+
+            # Démarre l'animation
+            spinner.start()
+
+            # Ajoute le spinner à la fenêtre
+            child.set_child(spinner)'''
         print(children)
 
     #@Gtk.Template.Callback()
