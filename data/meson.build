@@ -39,5 +39,5 @@ gnome.compile_resources('gconvert',
   'gconvert.gresource.xml',
   gresource_bundle: true,
   install: true,
-  install_dir: get_option('datadir'),
+  install_dir: get_option('datadir') / 'gconvert' ,
 )
