@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gresources>
-  <gresource prefix="/com/qsk/gconvert">
-    <file preprocess="xml-stripblanks" alias="window.ui">../data/ui/window.ui</file>
-    <file preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">../data/ui/gtk/help-overlay.ui</file>
-    <file>style.css</file>
-    <file alias="com.qsk.gconvert.svg">com.qsk.gconvert.svg</file>
-  </gresource>
-</gresources>
