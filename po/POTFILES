@@ -1,6 +1,6 @@
 data/com.qsk.gconvert.desktop.in
 data/com.qsk.gconvert.metainfo.xml.in
 data/com.qsk.gconvert.gschema.xml
-src/main.py
-src/window.py
-src/window.ui
+gnomeconvert/main.py
+gnomeconvert/window.py
+gnomeconvert/window.ui

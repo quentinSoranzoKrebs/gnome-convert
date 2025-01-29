@@ -34,3 +34,10 @@ test('Validate schema file',
      args: ['--strict', '--dry-run', meson.current_source_dir()])
 
 subdir('icons')
+
+gnome.compile_resources('gconvert',
+  'gconvert.gresource.xml',
+  gresource_bundle: true,
+  install: true,
+  install_dir: get_option('datadir'),
+)
