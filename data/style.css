@@ -1,0 +1,30 @@
+.green-button {
+  background-color: #14FFFF; /*rgb 20.8 , 51.8 , 89.4 */
+  color: white;
+  border-radius: 99px;
+  padding: 10px 32px;
+}
+
+.green-button:hover {
+  background-color: #1CFFFF; /*rgb 28.6 , 56.5 , 90.6 */
+}
+.green-button:active {
+    background-color: #1000FF; /*rgb 16.5 , 41.6 , 71.4 */
+}
+
+button.pill.small {
+  font-size: .83333em;
+  border-radius: 99px;
+  margin: 0;
+  padding: 1px 12px;
+}
+
+.logo {
+  min-width: 200px;
+  min-height: 200px;
+}
+
+.next-btn {
+  border-radius: 99px;
+  padding: 10px 32px;
+}
