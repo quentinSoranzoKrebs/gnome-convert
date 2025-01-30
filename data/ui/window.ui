@@ -8,7 +8,7 @@
   <requires lib="libadwaita" version="1.4"/>
   <template class="GconvertWindow" parent="AdwApplicationWindow">
     <property name="content">
-      <object class="AdwToolbarView">
+      <object class="AdwToolbarView" id="toolbar_view">
         <property name="content">
           <object class="GtkLabel" id="label">
             <property name="label">Hello, World!</property>
@@ -55,35 +55,6 @@
                             <property name="xalign">0</property>
                             <style>
                               <class name="title-1"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkListBox" id="listbox">
-                            <property name="margin-bottom">14</property>
-                            <property name="selection-mode">none</property>
-                            <child>
-                              <object class="GtkListBoxRow" id="addbox">
-                                <property name="valign">center</property>
-                                <child>
-                                  <object class="GtkBox">
-                                    <property name="halign">center</property>
-                                    <child>
-                                      <object class="GtkLabel">
-                                        <property name="halign">center</property>
-                                        <property name="label">+</property>
-                                        <property name="valign">center</property>
-                                        <property name="xalign">0</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                            <!--signal name="row-activated" handler="row_activated"/-->
-                            <style>
-                              <class name="rich-list"/>
-                              <class name="boxed-list"/>
                             </style>
                           </object>
                         </child>
@@ -149,42 +120,9 @@
             </child>
           </object>
         </child>
-        <child type="top">
-          <object class="AdwHeaderBar" id="header_bar">
-            <child type="end">
-              <object class="GtkMenuButton">
-                <property name="icon-name">open-menu-symbolic</property>
-                <property name="menu-model">primary_menu</property>
-                <property name="primary">True</property>
-                <property name="tooltip-text" translatable="yes">Menu</property>
-              </object>
-            </child>
-          </object>
-        </child>
       </object>
     </property>
     <property name="default-height">600</property>
     <property name="default-width">500</property>
   </template>
-  <!-- Définition du menu -->
-  <menu id="primary_menu">
-    <section>
-      <item>
-        <attribute name="action">app.preferences</attribute>
-        <attribute name="label" translatable="yes">_Preferences</attribute>
-      </item>
-      <item>
-        <attribute name="action">win.show-help-overlay</attribute>
-        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
-      </item>
-      <item>
-        <attribute name="action">app.about</attribute>
-        <attribute name="label" translatable="yes">_About Gconvert</attribute>
-      </item>
-      <item>
-        <attribute name="action">app.aide</attribute>
-        <attribute name="label" translatable="yes">_Aide</attribute>
-      </item>
-    </section>
-  </menu>
 </interface>

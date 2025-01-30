@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <template class="FileRowbox" parent="GtkListBoxRow">
+    <child>
+      <object class="GtkBox" id="hbox">
+        <property name="orientation">horizontal</property>
+        <child>
+          <object class="GtkLabel" id="file_label">
+            <property name="label">Nom_du_label</property>
+            <property name="ellipsize">end</property>
+            <property name="margin-start">10</property>
+            <property name="margin-end">10</property>
+            <property name="margin-top">5</property>
+            <property name="margin-bottom">5</property>
+            <property name="hexpand">true</property>
+            <property name="halign">start</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox" id="combobox_box">
+            <property name="orientation">horizontal</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
+

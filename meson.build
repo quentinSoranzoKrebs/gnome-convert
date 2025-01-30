@@ -18,3 +18,13 @@ gnome.post_install(
     gtk_update_icon_cache: true,
   update_desktop_database: true,
 )
+
+
+configure_file(
+  input: 'gconvert.in',
+  output: 'gconvert',
+  configuration: conf,
+  install: true,
+  install_dir: get_option('bindir'),
+  install_mode: 'r-xr--r--'
+)
