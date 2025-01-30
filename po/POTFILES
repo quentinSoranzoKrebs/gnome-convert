@@ -1,8 +1,14 @@
 data/com.qsk.gconvert.desktop.in
 data/com.qsk.gconvert.metainfo.xml.in
 data/com.qsk.gconvert.gschema.xml
+data/ui/window.ui
+data/ui/HeaderBar.ui
+data/ui/FileRowbox.ui
+data/ui/SelectListbox.ui
+gnomeconvert/filerowbox.py
+gnomeconvert/filters.py
+gnomeconvert/selectlistbox.py
+gnomeconvert/utils.py
 gnomeconvert/main.py
 gnomeconvert/window.py
 gnomeconvert/headerbar.py
-gnomeconvert/window.ui
-gnomeconvert/headerbar.ui
