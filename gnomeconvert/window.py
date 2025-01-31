@@ -17,56 +17,47 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+from gconvert.utils import *
 from gi.repository import Adw
 from gi.repository import Gtk, Gio, Pango
 from PIL import Image
 import ffmpeg
+
 from gconvert import main
-from gconvert.headerbar import HeaderBar
-from gconvert.selectlistbox import SelectListbox
-from gconvert.utils import *
+from gconvert.widgets.headerbar import HeaderBar
+from gconvert.widgets.selectlistbox import SelectListbox
+from gconvert.widgets.convertlistbox import ConvertListbox
+from gconvert.filemanager import FileManager
 
 
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
 class GconvertWindow(Adw.ApplicationWindow):
+
     __gtype_name__ = 'GconvertWindow'
 
     convert_btn = Gtk.Template.Child()
     next2 = Gtk.Template.Child()
     stack = Gtk.Template.Child()
     main_contain = Gtk.Template.Child()
-    convert_listbox = Gtk.Template.Child()
     toolbar_view = Gtk.Template.Child()
-    '''label = Gtk.Template.Child()
-    box = Gtk.Template.Child()
-    button1 = Gtk.Template.Child()
-    combo_box = Gtk.Template.Child()
-    btn_sort = Gtk.Template.Child()
-    btn_load = Gtk.Template.Child()
-    convert_bar = Gtk.Template.Child()'''
+    listbox_contain = Gtk.Template.Child()
+    convertbox_contain = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.next2.connect("clicked", self.page1)
-        '''self.box.set_orientation(Gtk.Orientation.VERTICAL)
-        self.button1.connect("clicked", self.convert)
-        self.combo_box.connect("changed", self.on_my_combo_box_changed)
-        self.btn_load.connect('clicked', self.load_file)
-        self.btn_sort.connect('clicked', self.save_file)'''
+
+        self._filemanager = FileManager(self)
 
         self._headerbar = HeaderBar(self)
         #self.set_content(self._headerbar)
         self.toolbar_view.add_top_bar(self._headerbar)
 
         self._selectlistbox = SelectListbox(self)
+        self.listbox_contain.append(self._selectlistbox)
 
-        self.main_contain.append(self._selectlistbox)
-
-        #header = HeaderBar(self)
-        #box = Gtk.Box.new(1, 0)
-        #box.append(header)
-        #self.set_content(box)
-
+        self._convertlistbox = ConvertListbox(self)
+        self.convertbox_contain.append(self._convertlistbox)
 
 
     def page1(self, button):

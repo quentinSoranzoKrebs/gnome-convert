@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <template class="ConvertListbox" parent="GtkListBox">
+    <property name="margin-bottom">14</property>
+    <property name="selection-mode">none</property>
+    <!--child>
+      <object class="GtkListBoxRow" id="addbox">
+        <property name="valign">center</property>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">center</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="halign">center</property>
+                <property name="label">+</property>
+                <property name="valign">center</property>
+                <property name="xalign">0</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child-->
+      <!--signal name="row-activated" handler="row_activated"/-->
+    <style>
+      <class name="rich-list"/>
+      <class name="boxed-list"/>
+    </style>
+  </template>
+</interface>

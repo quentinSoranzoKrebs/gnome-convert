@@ -19,6 +19,19 @@
         <child>
           <object class="GtkBox" id="combobox_box">
             <property name="orientation">horizontal</property>
+            <child>
+              <object class="GtkComboBoxText" id="input_format_combobox">
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="array_label">
+                <property name="label">⟶</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="output_format_combobox">
+              </object>
+            </child>
           </object>
         </child>
       </object>

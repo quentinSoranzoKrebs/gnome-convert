@@ -11,15 +11,16 @@ conf.set('VERSION', meson.project_version())
 conf.set('localedir', get_option('prefix') / get_option('localedir'))
 conf.set('pkgdatadir', pkgdatadir)
 
+
+subdir('widgets')
+
 gconvert_sources = [
   '__init__.py',
   'main.py',
   'window.py',
-  'headerbar.py',
-  'selectlistbox.py',
   'filters.py',
-  'filerowbox.py',
-  'utils.py'
+  'utils.py',
+  'filemanager.py'
 ]
 
 

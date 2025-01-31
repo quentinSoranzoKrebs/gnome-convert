@@ -44,6 +44,8 @@ class FileRowbox(Gtk.ListBoxRow):
     hbox = Gtk.Template.Child()
     file_label = Gtk.Template.Child()
     combobox_box = Gtk.Template.Child()
+    input_format_combobox = Gtk.Template.Child()
+    output_format_combobox = Gtk.Template.Child()
 
     def __init__(self, application, input_file, file_format):
         super().__init__()
@@ -64,25 +66,18 @@ class FileRowbox(Gtk.ListBoxRow):
 
 
 
-        combo_box = Gtk.ComboBoxText()
         if self.mime_type.startswith("image/"):
             for format in file_formats.get("image"):
-                combo_box.append_text(file_formats["image"][format].split('/', 1)[1])
+                self.input_format_combobox.append_text(file_formats["image"][format].split('/', 1)[1])
         if self.mime_type.startswith("video/"):
             for format in file_formats.get("video"):
-                combo_box.append_text(file_formats["video"][format].split('/', 1)[1])
-        combo_box.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
-        self.combobox_box.append(combo_box)
+                self.input_format_combobox.append_text(file_formats["video"][format].split('/', 1)[1])
+        self.input_format_combobox.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
 
-        label_array = Gtk.Label(label="⟶")
-        self.combobox_box.append(label_array)
-
-        combo_box2 = Gtk.ComboBoxText()
         if self.mime_type.startswith("image/"):
             for format in file_formats.get("image"):
-                combo_box2.append_text(file_formats["image"][format].split('/', 1)[1])
+                self.output_format_combobox.append_text(file_formats["image"][format].split('/', 1)[1])
         if self.mime_type.startswith("video/"):
             for format in file_formats.get("video"):
-                combo_box2.append_text(file_formats["video"][format].split('/', 1)[1])
-        combo_box2.set_active(int(find_key(self.mime_type,file_formats[self.mime_type[:5]])))
-        self.combobox_box.append(combo_box2)
+                self.output_format_combobox.append_text(file_formats["video"][format].split('/', 1)[1])
+        self.output_format_combobox.set_active(0)

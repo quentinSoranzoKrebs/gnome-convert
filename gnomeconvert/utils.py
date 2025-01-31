@@ -29,7 +29,7 @@ def afficher_contenu_repertoire(chemin):
         print("Le chemin spécifié n'est pas un répertoire.")
 
 #afficher_contenu_repertoire("/app/share/gconvert/gconvert")
-afficher_contenu_repertoire("/com/qsk/gconvert/")
+afficher_contenu_repertoire("/app/share/gconvert/gconvert/")
 
 
 def progress_callback(progress):

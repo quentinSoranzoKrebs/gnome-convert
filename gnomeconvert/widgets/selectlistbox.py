@@ -19,9 +19,10 @@
 
 from gi.repository import Adw
 from gi.repository import Gtk, Gio, Pango
+
 from gconvert import main
 from gconvert.filters import filters
-from gconvert.filerowbox import FileRowbox
+from gconvert.widgets.filerowbox import FileRowbox
 
 
 @Gtk.Template(resource_path="/com/qsk/gconvert/SelectListbox.ui")
@@ -36,9 +37,8 @@ class SelectListbox(Gtk.ListBox):
 
         self.application = application
 
-        #self._filerowbox = FileRowbox(self)
-
-        #self.prepend(self._filerowbox)
+        self._filemanager = application._filemanager
+        self._filemanager.connect('files-changed', self.update)
 
         gesture = Gtk.GestureClick()
         gesture.connect("pressed", self.load_file)  # Pas besoin de passer self.addbox ici
@@ -51,43 +51,30 @@ class SelectListbox(Gtk.ListBox):
 
         filters(dialog)
 
-        dialog.connect("response", self.load_response)
+        dialog.connect("response", self.add_file_2_filemanager)  #self.load_response
         dialog.show()
 
-
-
-    def load_response(self, dialog, response):
+    def add_file_2_filemanager(self, dialog, response):
         if response == Gtk.ResponseType.ACCEPT:
             active_filter = dialog.get_filter().get_name()
             print("Le filtre actif est :", active_filter)
-            self.file = dialog.get_file()
 
-            #print(self.file.get_path())
+            self._filemanager.add_file(dialog.get_file())
 
-            #self.button1.set_label(self.file_name)
 
-            row = FileRowbox(self, self.file,"png")
-            print(row.path)
-            print(row.name)
+    def update(self, file_manager):
+
+        for child in self.get_children():
+            self.remove(child)
+        for file in self._filemanager.get_files():
+
+
+            row = FileRowbox(self, file,"png")
+            #print(row.path)
+            #print(row.name)
             self.prepend(row)
-            # Récupérer toutes les ListBoxRow de la liste box
-
-
-            #self.listbox.select_all()
-            #listbox_rows = self.listbox.get_selected_rows()
-
-            #listbox_rows = self.listbox.get_first_child()
-            #print(listbox_rows)
-
-            #print("Nombre d'éléments dans la liste box :", len(listbox_rows))
-
-
-            #self.listbox.unselect_all()
-
 
             self.application.convert_btn.set_sensitive(True)
-
-        dialog.destroy()
 
 
     def get_children(self) -> tuple:
@@ -97,9 +84,12 @@ class SelectListbox(Gtk.ListBox):
         print(child)
         # Parcours tous les enfants de la ListBox
         while child is not None:
-            if isinstance(child, Gtk.ListBoxRow):  # Vérifie si c'est un Gtk.Label
+            if isinstance(child, FileRowbox):  # Vérifie si c'est un Gtk.Label
                 children.append(child)
             child = child.get_next_sibling()
 
         return children
 
+    def on_files_changed(self, file_manager):
+        print("La liste des fichiers a changé. Mettre à jour l'affichage.")
+        # Mettre à jour l'interface utilisateur ici

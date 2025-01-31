@@ -59,6 +59,11 @@
                           </object>
                         </child>
                         <child>
+                          <object class="GtkBox" id="listbox_contain">
+                            <property name="orientation">vertical</property>
+                          </object>
+                        </child>
+                        <child>
                           <object class="GtkButton" id="convert_btn">
                             <property name="halign">center</property>
                             <property name="label">Convert</property>
@@ -99,12 +104,8 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkListBox" id="convert_listbox">
-                        <property name="selection-mode">none</property>
-                        <style>
-                          <class name="rich-list"/>
-                          <class name="boxed-list"/>
-                        </style>
+                      <object class="GtkBox" id="convertbox_contain">
+                        <property name="orientation">vertical</property>
                       </object>
                     </child>
                     <child>
