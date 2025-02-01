@@ -37,7 +37,6 @@ class GconvertApplication(Adw.Application):
         self.create_action('about', self.on_about_action)
         self.create_action('preferences', self.on_preferences_action, ["<Ctrl>comma"])
         self.create_action('aide', self.on_preferences_action, ['F1'])
-        self.create_action('convert', self.on_file_selected, ['<primary>c'])
 
         self.version = VERSION
 

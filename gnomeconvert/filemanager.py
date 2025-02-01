@@ -19,19 +19,57 @@
 
 from gi.repository import Gtk, Gio, GLib, GObject
 import os
+from PIL import Image
+import ffmpeg
 
 class FileManager(GObject.GObject):
 
     __gsignals__ = {
-        'files-changed': (GObject.SignalFlags.RUN_FIRST, None, ())
+        'files-changed': (GObject.SignalFlags.RUN_FIRST, None, ()),
+        "file-converted": (GObject.SignalFlags.RUN_FIRST, None, (str,))
     }
 
     def __init__(self, application):
         super().__init__()
         self.files = []
 
-    def convert(self, file, input_format, output_format):
-        pass
+    def convert_all(self, callback=None):
+        """
+        Convert and save all files in the self.files and saved
+        with a new name in the same directory as the original file.
+        """
+        for i, file in enumerate(self.files):
+            try:
+                # Get the original image path
+                path = file.get_path()
+
+                # Open the image
+                with Image.open(path) as image:
+                    # Convert the image to RGB mode (removes alpha channel)
+                    image_rgb = image.convert('RGB')
+
+                    # Create a new file path with the same name but .jpg extension
+                    base_name = os.path.splitext(os.path.basename(path))[0]  # Get filename without extension
+                    new_img_path = os.path.join(os.path.dirname(path), f"{base_name}.jpg")
+
+                    # Save the converted image in JPEG format
+                    image_rgb.save(new_img_path, 'JPEG')
+                    #print(f"Converted and saved: {new_img_path}")
+
+                progress = (i + 1) / len(self.files) if len(self.files) > 0 else 1.0
+
+
+                if callback:
+                    callback(file, "success", progress)   # return callback to confirm conversion and inform about progress
+
+
+            except Exception as e:
+                print(f"Failed to convert {path}: {e}")
+
+                if callback:
+                    callback(file, f"error: {e}", None)  # Inform UI about error
+
+
 
     def read_file(self):
         pass

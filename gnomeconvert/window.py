@@ -20,8 +20,6 @@
 from gconvert.utils import *
 from gi.repository import Adw
 from gi.repository import Gtk, Gio, Pango
-from PIL import Image
-import ffmpeg
 
 from gconvert import main
 from gconvert.widgets.headerbar import HeaderBar
@@ -47,44 +45,51 @@ class GconvertWindow(Adw.ApplicationWindow):
         super().__init__(**kwargs)
         self.next2.connect("clicked", self.page1)
 
-        self._filemanager = FileManager(self)
+        self.filemanager = FileManager(self)
+
 
         self._headerbar = HeaderBar(self)
         #self.set_content(self._headerbar)
         self.toolbar_view.add_top_bar(self._headerbar)
 
-        self._selectlistbox = SelectListbox(self)
-        self.listbox_contain.append(self._selectlistbox)
+        self.selectlistbox = SelectListbox(self)
+        self.listbox_contain.append(self.selectlistbox)
 
-        self._convertlistbox = ConvertListbox(self)
-        self.convertbox_contain.append(self._convertlistbox)
+        self.convertlistbox = ConvertListbox(self)
+        self.convertbox_contain.append(self.convertlistbox)
+
 
 
     def page1(self, button):
         self.stack.set_visible_child_name("page1")
 
+
     @Gtk.Template.Callback()
     def convert(self, button):
         self.stack.set_visible_child_name("page2")
 
-        children = get_children(self.listbox)
+        self.filemanager.convert_all(self.on_conversion_progress)
 
-        for child in children:
-            self.listbox.remove(child)
-            self.convert_listbox.append(child)
 
-            #pour créer un detecteur de progression circulaire il faudra utiliser un gtk.progressbar eet le personnalier en cercle.
+        #pour créer un detecteur de progression circulaire il faudra utiliser un gtk.progressbar eet le personnalier en cercle.
 
-            '''# Crée un Gtk.Spinner
-            spinner = Gtk.Spinner()
+        '''# Crée un Gtk.Spinner
+        spinner = Gtk.Spinner()
 
-            # Démarre l'animation
-            spinner.start()
+        # Démarre l'animation
+        spinner.start()
 
-            # Ajoute le spinner à la fenêtre
-            child.set_child(spinner)'''
-        print(children)
+        # Ajoute le spinner à la fenêtre
+        child.set_child(spinner)'''
 
 
 
+    def on_conversion_progress(self, file, status, progress):
+        """Callback appelé après chaque fichier converti."""
+        if status == "success":
+            print(f"✅ Conversion réussie : {file}")
+            self.progress_bar.set_fraction(progress)
+
+        elif "error" in status:
+            print(f"❌ Erreur sur {file} : {status}")
 

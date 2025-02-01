@@ -35,8 +35,8 @@ class ConvertListbox(Gtk.ListBox):
 
         self.application = application
 
-        self._filemanager = application._filemanager
-        self._filemanager.connect('files-changed', self.update)
+        self.filemanager = application.filemanager
+        self.filemanager.connect('files-changed', self.update)
 
         '''gesture = Gtk.GestureClick()
         gesture.connect("pressed", self.fonction)
@@ -46,7 +46,7 @@ class ConvertListbox(Gtk.ListBox):
 
         for child in self.get_children():
             self.remove(child)
-        for file in self._filemanager.get_files():
+        for file in self.filemanager.get_files():
 
 
             row = FileRowbox(self, file,"png")

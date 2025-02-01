@@ -37,8 +37,8 @@ class SelectListbox(Gtk.ListBox):
 
         self.application = application
 
-        self._filemanager = application._filemanager
-        self._filemanager.connect('files-changed', self.update)
+        self.filemanager = application.filemanager
+        self.filemanager.connect('files-changed', self.update)
 
         gesture = Gtk.GestureClick()
         gesture.connect("pressed", self.load_file)  # Pas besoin de passer self.addbox ici
@@ -51,22 +51,22 @@ class SelectListbox(Gtk.ListBox):
 
         filters(dialog)
 
-        dialog.connect("response", self.add_file_2_filemanager)  #self.load_response
+        dialog.connect("response", self.add_file_2filemanager)  #self.load_response
         dialog.show()
 
-    def add_file_2_filemanager(self, dialog, response):
+    def add_file_2filemanager(self, dialog, response):
         if response == Gtk.ResponseType.ACCEPT:
             active_filter = dialog.get_filter().get_name()
             print("Le filtre actif est :", active_filter)
 
-            self._filemanager.add_file(dialog.get_file())
+            self.filemanager.add_file(dialog.get_file())
 
 
     def update(self, file_manager):
 
         for child in self.get_children():
             self.remove(child)
-        for file in self._filemanager.get_files():
+        for file in self.filemanager.get_files():
 
 
             row = FileRowbox(self, file,"png")

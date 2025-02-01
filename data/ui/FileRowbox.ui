@@ -25,7 +25,7 @@
             </child>
             <child>
               <object class="GtkLabel" id="array_label">
-                <property name="label">⟶</property>
+                <property name="label"> ⟶ </property>
               </object>
             </child>
             <child>
