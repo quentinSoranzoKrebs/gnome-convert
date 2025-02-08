@@ -11,7 +11,8 @@
         "--filesystem=host",
         "--filesystem=xdg-run/gvfsd",
         "--device=dri",
-        "--socket=wayland"
+        "--socket=wayland",
+        "--talk-name=org.freedesktop.FileManager1"
     ],
     "cleanup" : [
         "/include",
@@ -47,6 +48,18 @@
             },
             "build-commands" : [
                 "pip3 install --prefix=/app --no-cache-dir ffmpeg-python"
+            ]
+        },
+        {
+            "name" : "ffmpeg",
+            "buildsystem" : "simple",
+            "build-options" : {
+                "build-args" : [
+                    "--share=network"
+                ]
+            },
+            "build-commands" : [
+                "pip3 install --prefix=/app --no-cache-dir pydbus"
             ]
         },
         {

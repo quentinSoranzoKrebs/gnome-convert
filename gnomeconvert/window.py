@@ -27,7 +27,6 @@ from gconvert.widgets.selectlistbox import SelectListbox
 from gconvert.widgets.convertlistbox import ConvertListbox
 from gconvert.filemanager import FileManager
 
-
 @Gtk.Template(resource_path='/com/qsk/gconvert/window.ui')
 class GconvertWindow(Adw.ApplicationWindow):
 

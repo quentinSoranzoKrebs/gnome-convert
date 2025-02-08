@@ -24,6 +24,15 @@ from gconvert import main
 from gconvert.filters import filters
 from gconvert.widgets.filerowbox import FileRowbox
 
+from pydbus import SessionBus
+
+def open_file_manager(path):
+    bus = SessionBus()
+    file_manager = bus.get("org.freedesktop.FileManager1")
+    file_manager.ShowFolders([f"file://{path}"], "")
+
+open_file_manager("/home/quentin/Music")
+
 
 @Gtk.Template(resource_path="/com/qsk/gconvert/SelectListbox.ui")
 class SelectListbox(Gtk.ListBox):
